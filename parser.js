@@ -26,8 +26,13 @@ function getPageData() {
     document
       .querySelector(".priceBlockFinalPrice--iToZR")
       ?.innerText.replace(/\D/g, "") || null;
-  const description =
+  const rawDescription =
     document.querySelector(".descriptionText--Jq9n2")?.innerHTML.trim() || null;
+
+  // Если описание было найдено, заменяем в нём все символы переноса строки на тег <br>
+  const description = rawDescription
+    ? rawDescription.replace(/\n/g, "<br>")
+    : null;
   const url = window.location.href;
 
   // 3. Изображения
