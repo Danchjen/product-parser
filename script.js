@@ -48,24 +48,14 @@ function jsonToXlsx(data, filePath) {
     return;
   }
 
-  const flattenedData = data.map((item) => {
-    return Object.entries(item).reduce((acc, [key, value]) => {
-      if (
-        typeof value === "object" &&
-        value !== null &&
-        !Array.isArray(value)
-      ) {
-        return { ...acc, ...value };
-      } else {
-        acc[key] = value;
-        return acc;
-      }
-    }, {});
-  });
+  // --- ИЗМЕНЕНИЕ НАЧАЛО ---
+  // Логика выравнивания объекта удалена, так как данные уже приходят в нужном формате из парсера.
+  // Мы просто используем массив 'data' напрямую.
 
   const workbook = XLSX.utils.book_new();
-  const worksheet = XLSX.utils.json_to_sheet(flattenedData);
+  const worksheet = XLSX.utils.json_to_sheet(data); // Используем 'data' напрямую
   XLSX.utils.book_append_sheet(workbook, worksheet, "Products");
+  // --- ИЗМЕНЕНИЕ КОНЕЦ ---
 
   const dir = filePath.substring(0, filePath.lastIndexOf("/"));
   if (dir && !fs.existsSync(dir)) {
